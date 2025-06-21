@@ -216,6 +216,61 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &748223691
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 748223693}
+  - component: {fileID: 748223692}
+  m_Layer: 0
+  m_Name: TileSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &748223692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748223691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b6ed958eaccc9143a5c0dd06fbf5462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileStartCount: 10
+  minimumStraightTiles: 3
+  maximunStraightTiles: 15
+  startingTile: {fileID: 7270030239991754380, guid: 50a7756a8e2f0f14787d70ef66f51488, type: 3}
+  turnTiles:
+  - {fileID: 3504972824814534260, guid: 57a0c77d40fb7f64f88c73e669bd75d0, type: 3}
+  - {fileID: 3109650500946958552, guid: d1bc38dd49605864690bd11be3a4da2a, type: 3}
+  - {fileID: 5635246150992067340, guid: 406d087854fa4cf4ba1b09b5571e98e9, type: 3}
+  obstacles:
+  - {fileID: 1887772381221813489, guid: 7acef6c3f1b5d6f45b162045d394132f, type: 3}
+  - {fileID: 7602181854675208719, guid: 155f450bb33de2c4f96d377dba80b194, type: 3}
+--- !u!4 &748223693
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748223691}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,3 +369,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 963194228}
   - {fileID: 705507995}
+  - {fileID: 748223693}
