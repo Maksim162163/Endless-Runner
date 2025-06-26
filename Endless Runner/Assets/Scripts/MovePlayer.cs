@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
+using System.Collections;
 
 namespace TempleRun.Player
 {
@@ -14,6 +15,8 @@ namespace TempleRun.Player
         [SerializeField] private float initialGravityValue = -9.81f;
         [SerializeField] private LayerMask groundLayer;
         [SerializeField] private LayerMask turnLayer;
+        [SerializeField] private Animator animator;
+        [SerializeField] private AnimationClip slideAnimationClip;
 
         private float playerSpeed;
         private float gravity;
@@ -27,12 +30,17 @@ namespace TempleRun.Player
 
         private CharacterController characterController;
 
+        private int slidingAnimationId;
+        private bool sliding = false;
+
         [SerializeField] private UnityEvent<Vector3> turnEvent;
 
         private void Awake()
         {
             characterController = GetComponent<CharacterController>();
             playerInput = GetComponent<PlayerInput>();
+
+            slidingAnimationId = Animator.StringToHash("Sliding");
 
             turnAction = playerInput.actions["Turn"];
             jumpAction = playerInput.actions["Jump"];
@@ -102,7 +110,29 @@ namespace TempleRun.Player
 
         private void PlayerSlide(InputAction.CallbackContext context)
         {
+            if (!sliding && IsGrounded())
+            {
+                StartCoroutine(Slide());
+            }
+        }
 
+        private IEnumerator Slide()
+        {
+            sliding = true;
+            // Shrink the collider
+            Vector3 originalControllerCenter = characterController.center;
+            Vector3 newControllerCenter = originalControllerCenter;
+            characterController.height /= 2;
+            newControllerCenter.y -= characterController.height / 2;
+            characterController.center = newControllerCenter;
+
+            // Play the sliding animation
+            animator.Play(slidingAnimationId);
+            yield return new WaitForSeconds(slideAnimationClip.length);
+            // Set the character controller collider back to normal after sliding
+            characterController.height *= 2;
+            characterController.center = originalControllerCenter;
+            sliding = false;
         }
 
         private void PlayerJump(InputAction.CallbackContext context)
@@ -137,8 +167,8 @@ namespace TempleRun.Player
             raycastOriginFirst -= transform.forward * .2f;
             raycastOriginSecond += transform.forward * .2f;
 
-            Debug.DrawLine(raycastOriginFirst, Vector3.down, Color.green);
-            Debug.DrawLine(raycastOriginSecond, Vector3.down, Color.red);
+            //Debug.DrawLine(raycastOriginFirst, Vector3.down, Color.green);
+            //Debug.DrawLine(raycastOriginSecond, Vector3.down, Color.red);
 
             if (Physics.Raycast(raycastOriginFirst, Vector3.down, out RaycastHit hit, length, groundLayer) ||
                 Physics.Raycast(raycastOriginSecond, Vector3.down, out RaycastHit hit2, length, groundLayer))
